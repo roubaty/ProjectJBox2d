@@ -53,7 +53,6 @@ public class Level extends Thread {
 		listSensor = new Hashtable<String, Sensor>();
 		sensorCollisionSystem = new SensorCollisionSystem();
 		world.setContactListener(sensorCollisionSystem);
-		
 	}
 
 	public void nextStep() {
@@ -183,7 +182,7 @@ public class Level extends Thread {
 			nextStep();
 			try {
 				// TODO review time of sleep
-				Thread.sleep(10);
+				Thread.sleep(30);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

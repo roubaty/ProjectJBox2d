@@ -50,36 +50,33 @@ public class GraphicsView extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Vec2 cornerUpRight;
+		Vec2 transition;
 		double size_x_frame = getWidth();
 		double size_y_frame = getHeight();
 		if(monde.getLeveldescriptor().getType()==LevelDescriptor.BY_COLOR){
 			setBackground(monde.getLeveldescriptor().getColor());
 		}
 		Graphics2D g2d = (Graphics2D) g;
-//		double size_x_new_frame=0;
-//		double size_y_new_frame=0;
 		if(typeOfView==AUTOFOLLOW) {
 			float pos_x = objectToFollow.getBody().getPosition().x;
 			float pos_y = objectToFollow.getBody().getPosition().y;
+			double supposed_size_x = size_x_frame/zoom;
+			double supposed_size_y = size_y_frame/zoom;
+			float shift_x = (float) ((size_x_frame-supposed_size_x)/2);
+			float shift_y = (float) ((size_y_frame-supposed_size_y)/2);
+			System.out.println(zoom+" : "+size_x_frame+" : "+size_y_frame+" : "+supposed_size_x+" : "+supposed_size_y+" : "+shift_x+" : "+shift_y);
+			cornerDownLeft = new Vec2((float) (pos_x-(size_x_frame/(2*zoom))),(float) (pos_y-(size_y_frame/(2*zoom))));
+			cornerUpRight = new Vec2((float) (pos_x+(size_x_frame/(2*zoom))),(float) (pos_y+(size_y_frame/(2*zoom))));
 			
-//			double size_x_zoom = size_x_frame*zoom;
-//			double size_y_zoom = size_y_frame*zoom;
-//			double size_x_new_frame = (size_x_zoom-size_x_frame)/2;
-//			double size_y_new_frame = (size_y_zoom-size_y_frame)/2;
-			pos_x *= zoom;
-			pos_y *= zoom;
-			//System.out.println("x : "+pos_x+" y : "+pos_y);
-			cornerDownLeft = new Vec2((float) (pos_x-(size_x_frame/2)),(float) (pos_y-(size_y_frame/2)));
-			cornerUpRight = new Vec2((float) (pos_x+(size_x_frame/2)),(float) (pos_y+(size_y_frame/2)));
+			transition = cornerDownLeft.sub(new Vec2(-shift_x, -shift_y));
 		}else{
-			cornerUpRight = new Vec2((float)(cornerDownLeft.x+size_x_frame), (float)(cornerDownLeft.y+size_y_frame));
+			cornerUpRight = new Vec2((float)((cornerDownLeft.x+size_x_frame)/zoom), (float) ((cornerDownLeft.y+size_y_frame)/zoom));
+			transition = cornerDownLeft;
 		}
 		Shape[] shapes = monde.getItemToPrint(cornerDownLeft, cornerUpRight, maxObjectOnScreen);
-//		AffineTransform af = AffineTransform.getTranslateInstance(-cornerDownLeft.x,getHeight()+cornerDownLeft.y);
-//		af.concatenate(AffineTransform.getScaleInstance(zoom,-zoom));
 		AffineTransform af = AffineTransform.getTranslateInstance(0, getHeight());
 		af.concatenate(AffineTransform.getScaleInstance(zoom,-zoom));
-		af.translate(-cornerDownLeft.x, -cornerDownLeft.y);
+		af.translate(-transition.x, -transition.y);
 		g2d.setTransform(af);
 		Body body;
 		ShapeDes sp;

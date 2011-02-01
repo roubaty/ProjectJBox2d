@@ -27,7 +27,7 @@ import objects.visual.Visual;
 import sensor.SensorSpeed;
 
 public class TestObject {
-	public static void main(String[] args){
+	public static void main(String[] args) throws InterruptedException{
 		//Visual creation
 		
 		Visual visual2 = new Visual(Color.black, Color.yellow);
@@ -44,6 +44,7 @@ public class TestObject {
 		ObjectDescription obj3 = FactoryObjectBox2D.createPolygon(vertices, new Lead(), visual);
 		ObjectDescription obj4 = FactoryObjectBox2D.createBox(100, 20, new Lead(), visual2);
 		ObjectDescription obj5 = FactoryObjectBox2D.createBox(20, 20, new Lead(), visual2);
+		ObjectDescription obj6 = FactoryObjectBox2D.createBox(700, 20, new Lead(), visual);
 		
 		//Define type of objects
 		Heroe hero = new Heroe(obj2);
@@ -58,6 +59,7 @@ public class TestObject {
 		ld2.setColor(Color.yellow);
 		//Level creation
 		Level level = new Level(ld);
+		Decorate ground3 = new Decorate(obj6);
 		
 		//Define type of objects
 		Portal portal = new Portal(obj5,level);
@@ -69,32 +71,49 @@ public class TestObject {
 		ObjectAdded ground1Added = level.addObject("ground1", ground1, 0, 0, true);
 		ObjectAdded ground2Added = level.addObject("ground2", ground2, 120, 0, true);
 		ObjectAdded ground3Added = level.addObject("ground3", ground1, 400, 300, true);
+		ObjectAdded ground4Added = level.addObject("ground5", ground3, 250, 0, true);
 		ObjectAdded square1Added = level.addObject("Square1", magnet, 20, 50, false);
+		ObjectAdded player3Added = level.addObject("player3", hero, 260, 30, false);
 		ObjectAdded player1Added = level.addObject("player1", hero, 10, 100, false);
 		ObjectAdded player2Added = level.addObject("player2", hero, 130, 70, false);
 		
 //		ObjectBox2D pikeAdded = level.addObjectBox2D("pike1", magnet, 90, 60, false);
-		
+//		GraphicsView view6 = new GraphicsView(level, new Vec2(0,0), 1);
+//		level.addAGraphicView("Fix View6", view6);
+//		JFrame frame6 = new JFrame("Frame 1");
+//		frame6.setLocation(0, 0);
+//		frame6.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame6.setSize(1900,1100);
+//		frame6.add(view6);
+//		GraphicsView view7 = new GraphicsView(level, new Vec2(0,0), 2);
+//		level.addAGraphicView("Fix View7", view7);
+//		JFrame frame7 = new JFrame("Frame 2");
+//		frame7.setLocation(0, 0);
+//		frame7.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame7.setSize(1900,1100);
+//		frame7.add(view7);
 		//View creation
-		GraphicsView view = new GraphicsView(level, new Vec2(100,0), 3);
-		GraphicsView view1 = new GraphicsView(level,player2Added, 3);
-		GraphicsView view2 = new GraphicsView(level, new Vec2(100,0), 1);
-		GraphicsView view3 = new GraphicsView(level,player2Added, 1);
+		GraphicsView view1 = new GraphicsView(level, new Vec2(100,0), 3);
+		GraphicsView view2 = new GraphicsView(level,player2Added, 3);
+		GraphicsView view3 = new GraphicsView(level, new Vec2(100,0), 1);
+		GraphicsView view4 = new GraphicsView(level,player2Added, 1);
+		GraphicsView view5 = new GraphicsView(level, new Vec2(0,0), 0.1);
 		//GraphicsView view1 = new GraphicsView(level,new Vec2(-200,-240),new Vec2(300,260),1);
 		//Add view to the level
 		
-		level.addAGraphicView("Fix View1", view);
-		level.addAGraphicView("Fix View2", view1);
-		level.addAGraphicView("Fix View3", view2);
-		level.addAGraphicView("Fix View4", view3);
+		level.addAGraphicView("Fix View1", view1);
+		level.addAGraphicView("Fix View2", view2);
+		level.addAGraphicView("Fix View3", view3);
+		level.addAGraphicView("Fix View4", view4);
+		level.addAGraphicView("Fix View5", view5);
 		
-		JFrame frame = new JFrame("Frame 1");
+		JFrame frame1 = new JFrame("Frame 1");
 		JFrame frame2 = new JFrame("Frame 2");
 		frame2.setLocation(500, 0);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500,500);
-		frame.add(view);
-		frame2.add(view1);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.setSize(500,500);
+		frame1.add(view1);
+		frame2.add(view2);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.setSize(500,500);
 		
@@ -104,18 +123,22 @@ public class TestObject {
 		frame4.setLocation(500, 500);
 		frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame3.setSize(500,500);
-		frame3.add(view2);
-		frame4.add(view3);
+		frame3.add(view3);
+		frame4.add(view4);
 		frame4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame4.setSize(500,500);
+		
+		JFrame frame5 = new JFrame("Frame 5");
+		frame5.setLocation(0, 1000);
+		frame5.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame5.setSize(1000,100);
+		frame5.add(view5);
 		//Creation of the game
 		Game game = new Game();
 		
 		//Sensor creation
 		ActionListenerSpeed actionLis = new ActionListenerSpeed();
 		List<ObjectAdded> speedSensitive = new ArrayList<ObjectAdded>();
-//		speedSensitive.add(player1Added);
-//		speedSensitive.add(player2Added);
 		SensorSpeed speed = new SensorSpeed(SensorSpeed.GREATERTHAN, 10f, speedSensitive, actionLis);
 		
 		//Add sensor to the level
@@ -124,9 +147,16 @@ public class TestObject {
 		game.addLevel("Level 1", level);
 		game.startLevel("Level 1");
 		
-		frame.setVisible(true);
+		frame1.setVisible(true);
 		frame2.setVisible(true);
 		frame3.setVisible(true);
 		frame4.setVisible(true);
+		frame5.setVisible(true);
+		while(true){
+			
+			Thread.sleep(10);
+		}
+//		frame6.setVisible(true);
+//		frame7.setVisible(true);
 	}
 }
