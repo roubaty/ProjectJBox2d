@@ -29,7 +29,7 @@ public class UserEventListener implements KeyListener, MouseListener {
 		l.lock();
 		ArrayList<KeyEvents> return_value;
 		try {
-			return_value = keyEvents;
+			return_value = (ArrayList<KeyEvents>) keyEvents.clone();
 			keyEvents.clear();
 		} finally {
 			l.unlock();

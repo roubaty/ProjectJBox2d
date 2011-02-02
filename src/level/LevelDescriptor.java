@@ -14,7 +14,7 @@ public class LevelDescriptor {
 	public LevelDescriptor(Vec2 gravity){
 		this.gravity=gravity;
 		this.worldAabb=new AABB(new Vec2(-Integer.MIN_VALUE,-Integer.MIN_VALUE),new Vec2(Integer.MAX_VALUE,Integer.MAX_VALUE));
-		this.doSleep=false;
+		this.doSleep=true;
 		this.frameTime=1f/40f;
 		this.internalIteration=5;
 	}

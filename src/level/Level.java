@@ -20,7 +20,6 @@ import org.jbox2d.collision.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
-import org.w3c.dom.ls.LSInput;
 
 import actions.ActionCollisionSpringBoard;
 import actions.ActionDistanceMagnet;
@@ -37,6 +36,15 @@ public class Level extends Thread {
 	private Map<String, Sensor> listSensor;
 	private LevelDescriptor leveldescriptor;
 	private SensorCollisionSystem sensorCollisionSystem;
+	private boolean running=true;
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
 	public LevelDescriptor getLeveldescriptor() {
 		return leveldescriptor;
 	}
@@ -178,11 +186,11 @@ public class Level extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (running) {
 			nextStep();
 			try {
 				// TODO review time of sleep
-				Thread.sleep(30);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

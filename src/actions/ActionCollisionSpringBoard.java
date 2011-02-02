@@ -18,13 +18,13 @@ public class ActionCollisionSpringBoard implements ActionCollision{
 			norm.normalize();
 			if(object1.isSpringboard()){
 				Vec2 currentSpeed = object2.getVitesse();
-				Vec2 impluse = new Vec2(currentSpeed.x*(-2),currentSpeed.y*(-2));
+				Vec2 impluse = new Vec2(currentSpeed.x,currentSpeed.y*(-2));
 				impluse = impluse.add(norm.mul(force));
 				object2.getBody().setLinearVelocity(object2.getBody().getLinearVelocity().add(impluse));
 			}
 			if(object2.isSpringboard()){
 				Vec2 currentSpeed = object1.getVitesse();
-				Vec2 impluse = new Vec2(currentSpeed.x*(-2),currentSpeed.y*(-2));
+				Vec2 impluse = new Vec2(currentSpeed.x,currentSpeed.y*(-2));
 				impluse = impluse.add(norm.mul(force));
 				object1.getBody().setLinearVelocity(object1.getBody().getLinearVelocity().add(impluse));
 			}

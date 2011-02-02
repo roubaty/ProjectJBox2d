@@ -36,7 +36,7 @@ public class Game {
 	public boolean stopLevel(String name){
 		if(listLevel.containsKey(name)){
 			Level level = (Level) listLevel.get(name);
-			level.interrupt();
+			level.setRunning(false);
 			return true;
 		}
 		return false;

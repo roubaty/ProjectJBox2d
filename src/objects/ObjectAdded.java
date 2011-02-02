@@ -52,4 +52,8 @@ public class ObjectAdded extends ObjectBox2D{
 	public float getAngularVelocity(){
 		return body.getAngularVelocity();
 	}
+	public void applyForce(Vec2 force){
+		getBody().wakeUp();
+		getBody().setLinearVelocity(force.add(getBody().getLinearVelocity()));
+	}
 }

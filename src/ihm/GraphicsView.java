@@ -64,7 +64,7 @@ public class GraphicsView extends JPanel {
 			double supposed_size_y = size_y_frame/zoom;
 			float shift_x = (float) ((size_x_frame-supposed_size_x)/2);
 			float shift_y = (float) ((size_y_frame-supposed_size_y)/2);
-			System.out.println(zoom+" : "+size_x_frame+" : "+size_y_frame+" : "+supposed_size_x+" : "+supposed_size_y+" : "+shift_x+" : "+shift_y);
+			
 			cornerDownLeft = new Vec2((float) (pos_x-(size_x_frame/(2*zoom))),(float) (pos_y-(size_y_frame/(2*zoom))));
 			cornerUpRight = new Vec2((float) (pos_x+(size_x_frame/(2*zoom))),(float) (pos_y+(size_y_frame/(2*zoom))));
 			
